@@ -1,0 +1,90 @@
+swagger: "2.0"
+info:
+  description: "SORA2 API documentation that might be used for SORA2 application creation"
+  version: "1.0.0"
+  title: "SORA2 API"
+  termsOfService: ""
+  contact:
+    email: "sora@soramitsu.co.jp"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "test.com"
+basePath: "/api"
+tags:
+- name: "Assets"
+  description: "Assets pallet api"
+- name: "LiquidityProxy"
+  description: "Swap tokens api"
+schemes:
+- "ws"
+- "wss"
+paths:
+  /storage/assetInfos:
+    get:
+      tags:
+        - "Assets"
+      summary: "Get asset infos from storage"
+      parameters:
+        - in: "query"
+          name: "assetId"
+          description: "AssetId"
+          type: "string"
+      responses:
+        "200":
+          description: "successful request"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/AssetInfo"
+  /rpc/freeBalance:
+    post:
+      tags:
+        - "Assets"
+      summary: "Gets the information about balance"
+      description: ""
+      operationId: "addPet"
+      consumes:
+        - "application/x-www-form-urlencoded"
+      parameters:
+        - in: "formData"
+          name: "accountId"
+          description: "Account id"
+          type: "string"
+          required: true
+        - in: "formData"
+          name: "assetId"
+          description: "Asset id"
+          type: "string"
+          required: true
+      responses:
+        "200":
+          description: "successful request"
+          schema:
+            $ref: "#/definitions/Balance"
+
+
+definitions:
+  Balance:
+    type: "number"
+    format: "u128"
+  AssetInfo:
+    type: "object"
+    properties:
+      asset_id:
+        type: "string"
+        format: "[u8;32]"
+      symbol:
+        type: "string"
+        format: "String"
+      name:
+        type: "string"
+        format: "Vec<u8>"
+      precision:
+        type: "number"
+        format: "u8"
+      is_mintabe:
+        type: "boolean"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
