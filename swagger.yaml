@@ -43,7 +43,6 @@ paths:
         - "Assets"
       summary: "Gets the information about balance"
       description: ""
-      operationId: "addPet"
       consumes:
         - "application/x-www-form-urlencoded"
       parameters:
@@ -62,7 +61,64 @@ paths:
           description: "successful request"
           schema:
             $ref: "#/definitions/Balance"
-
+  /rpc/quote:
+    post:
+      tags:
+        - "LiquidityProxy"
+      summary: "Gets the information for swap"
+      description: ""
+      consumes:
+        - "application/x-www-form-urlencoded"
+      parameters:
+        - in: "formData"
+          name: "dexId"
+          description: "DEX ID"
+          type: "number"
+          format: "u32"
+          required: true
+        - in: "formData"
+          name: "inputAssetId"
+          description: "Asset ID"
+          type: "string"
+          format: "AssetId"
+          required: true
+        - in: "formData"
+          name: "outputAssetId"
+          description: "Asset id"
+          type: "string"
+          format: "AssetId"
+          required: true
+        - in: "formData"
+          name: "amount"
+          description: "amount"
+          type: "string"
+          format: "Text"
+          required: true
+        - in: "formData"
+          name: "swapVariant"
+          description: "Asset id"
+          type: "string"
+          enum: [WithDesiredInput, WithDesiredOutput]
+          required: true
+        - in: "formData"
+          name: "selectedSourceTypes"
+          description: "Sources"
+          type: "array"
+          items:
+            type: "string"
+            enum: [XYKPool, MulticollaterlBondingCurvePool]
+          required: false
+        - in: "formData"
+          name: "filterMode"
+          description: "Filter mode"
+          type: "string"
+          enum: [Disabled, ForbidSelected, AllowSelected]
+          required: true
+      responses:
+        "200":
+          description: "successful request"
+          schema:
+            $ref: "#/definitions/Balance"
 
 definitions:
   Balance:
